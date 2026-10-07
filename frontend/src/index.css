@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --base: #e9edf2;
+    --red: #e21f26;
+    --ink: #23252a;
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+    margin: 0;
+    font-family: "Manrope", sans-serif;
+    background: var(--base);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+::selection { background: var(--red); color: #fff; }
+
+@layer base {
+    :root {
+        --background: 213 24% 93%;
+        --foreground: 225 9% 15%;
+        --card: 213 24% 93%;
+        --card-foreground: 225 9% 15%;
+        --popover: 213 24% 95%;
+        --popover-foreground: 225 9% 15%;
+        --primary: 358 77% 50%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 213 18% 88%;
+        --secondary-foreground: 225 9% 15%;
+        --muted: 213 18% 88%;
+        --muted-foreground: 225 5% 38%;
+        --accent: 213 18% 88%;
+        --accent-foreground: 225 9% 15%;
+        --destructive: 0 84.2% 50%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 213 16% 82%;
+        --input: 213 16% 82%;
+        --ring: 358 77% 50%;
+        --radius: 0.9rem;
+    }
+}
+
+@layer base {
+    * { @apply border-border; }
+    h1, h2, h3, h4 { font-family: "Saira", sans-serif; }
+}
+
+@layer components {
+    .wrap { @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12; }
+    .eyebrow { @apply font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-brand-grey; }
+    .neu { @apply bg-brand-base shadow-neu; }
+    .neu-in { @apply bg-brand-base shadow-neu-in; }
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-display text-sm font-bold uppercase tracking-[0.12em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-brand-base;
+        transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-red { @apply btn bg-brand text-white shadow-neu-red hover:bg-brand-dark; }
+    .btn-red:hover { transform: translateY(-2px); }
+    .btn-neu { @apply btn bg-brand-base text-brand-ink shadow-neu-sm hover:text-brand; }
+    .btn-neu:hover { box-shadow: inset 3px 3px 7px #C5CDD7, inset -3px -3px 7px #FFFFFF; }
+    .field {
+        @apply w-full rounded-2xl bg-brand-base px-4 py-3.5 text-sm text-brand-ink shadow-neu-in-sm placeholder:text-[#7a7f88] focus:outline-none focus:ring-2 focus:ring-brand/40;
+        transition: box-shadow .2s ease;
+    }
+    .chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wider; }
+}
+
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee-track { animation: marquee 60s linear infinite; width: max-content; }
+
+.grain::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .06; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.spotlight { background: radial-gradient(60% 55% at 50% 45%, rgba(255,255,255,.95), rgba(233,237,242,0) 70%); }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+}
