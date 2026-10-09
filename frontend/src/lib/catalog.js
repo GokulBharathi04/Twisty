@@ -41,8 +41,13 @@ export const industries = [
 ];
 
 export const CONTACT = {
-  phone: "[PHONE NUMBER]",
-  email: "[EMAIL ADDRESS]",
+  phones: ["9500868288", "9445424938"],
+  phone: "9500868288 / 9445424938",
+  email: "twistywrapenterprises@outlook.com",
   website: "[WEBSITE]",
-  address: "[BUSINESS ADDRESS]",
+  address: "No:25/1, 1st Main Road, North Jaganathan Nagar, Villivakkam, Chennai 600049",
 };
+
+export const PARTNERS = ["Sathanand.M", "Harish Kumar.S"];
+
+export const isFlagship = (p) => p.family === "Stretch Film" || p.family === "Recyclable Honeycomb";

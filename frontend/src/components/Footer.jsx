@@ -45,10 +45,9 @@ export const Footer = () => {
           <div>
             <p className="eyebrow text-zinc-400">Contact</p>
             <ul className="mt-5 space-y-2.5 text-sm text-zinc-300" data-testid="footer-contact">
-              <li>{CONTACT.phone}</li>
-              <li>{CONTACT.email}</li>
-              <li>{CONTACT.website}</li>
-              <li>{CONTACT.address}</li>
+              {CONTACT.phones.map((p) => <li key={p}><a href={`tel:+91${p}`} className="hover:text-white" data-testid={`footer-phone-${p}`}>+91 {p}</a></li>)}
+              <li><a href={`mailto:${CONTACT.email}`} className="break-all hover:text-white" data-testid="footer-email">{CONTACT.email}</a></li>
+              <li className="leading-relaxed">{CONTACT.address}</li>
             </ul>
           </div>
         </div>

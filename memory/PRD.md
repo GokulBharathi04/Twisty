@@ -19,6 +19,7 @@ User choices: full multi-page site; enquiries saved to DB + Resend email; PDF + 
 - 16-page flat red/grey A4 PDF catalogue: glass-morphism cover with logo, logo top-right on all other pages.
 
 ## Backlog
-- P0: Replace `ENQUIRY_NOTIFY_EMAIL` (currently delivered@resend.dev test inbox) with the company's real inbox; fill contact placeholders.
+- 2026-10-09: Removed Home catalogue (flip-book) section; added real contact (phones, email, Chennai address + Google map), Managing Partners (Sathanand.M, Harish Kumar.S) on About/Contact/PDF, Flagship products (Stretch Film Bio & Non Bio, Honeycomb) on Home/About/PDF. Fixed mobile overflow on enquiry form.
+- P0: Replace `ENQUIRY_NOTIFY_EMAIL` (currently delivered@resend.dev test inbox) with the company's real inbox; website URL still a placeholder.
 - P1: Password-protected admin page to view enquiries and download attachments.
 - P2: Real product photos from the company; per-product image galleries.

@@ -54,7 +54,7 @@ export const EnquiryForm = ({ product = "", onDone }) => {
     );
 
   return (
-    <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2" data-testid="enquiry-form">
+    <form onSubmit={submit} className="grid grid-cols-1 gap-4 sm:grid-cols-2" data-testid="enquiry-form">
       <Field label="Full name" name="full_name" required value={form.full_name} onChange={set} />
       <Field label="Company name" name="company" required value={form.company} onChange={set} />
       <Field label="Email" name="email" type="email" required value={form.email} onChange={set} />

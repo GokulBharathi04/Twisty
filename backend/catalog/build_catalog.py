@@ -29,6 +29,10 @@ M = 40
 LOGO_FULL = PUB / "logo-full.png"
 LOGO_MARK = PUB / "logo-mark.png"
 PAGES = []
+PHONE = "9500868288 / 9445424938"
+EMAIL = "twistywrapenterprises@outlook.com"
+ADDRESS = "No:25/1, 1st Main Road, North Jaganathan Nagar, Villivakkam, Chennai 600049"
+PARTNERS = "Sathanand.M  ·  Harish Kumar.S"
 
 
 def jpeg(im, q=82):
@@ -169,7 +173,7 @@ def cover(c):
     para(c, "Packaging solutions built to protect your goods from the warehouse floor to the customer’s door — secure, dependable and increasingly sustainable.",
          M + 64, 168, 360, 10.5, "R", GREY)
     stripes(c, M, 60, 180, RED)
-    text(c, "[WEBSITE]   ·   [EMAIL ADDRESS]   ·   [PHONE NUMBER]", M, 40, 8, "M", GREY)
+    text(c, f"{EMAIL}   ·   {PHONE}   ·   Chennai", M, 40, 8, "M", GREY)
 
 
 def contents(c):
@@ -209,8 +213,9 @@ def about(c):
     tx, tw = M + 26, W * 0.58 - 52
     text(c, "OUR STORY", tx, H * 0.84 - 46, 14, "XB", INK)
     h = para(c, "We supply packaging solutions built to protect your goods from the warehouse floor to the customer’s door — secure, dependable and increasingly sustainable.", tx, H * 0.84 - 58, tw, 11, "M", INK)
-    para(c, "From stretch film and recyclable honeycomb to cartons, tapes, foams, printing and workplace safety supplies, our range is designed around the way your business stores, handles and ships its products. We work with you to specify the right material, the right size and the right quantity.",
+    h2 = para(c, "Our flagship products are <b>Stretch Film (Bio &amp; Non Bio-Degradable)</b> and <b>Honeycomb based products</b>. Alongside them we supply cartons, tapes, foams, printing and workplace safety supplies, designed around the way your business stores, handles and ships its products.",
          tx, H * 0.84 - 70 - h, tw, 9.5, "R", GREY)
+    para(c, f"<b>Managing Partners:</b> {PARTNERS}", tx, H * 0.84 - 80 - h - h2, tw, 9.5, "M", INK)
     pillars = [("Reliable protection", "Materials strong enough to hold loads together and protective enough to safeguard products."),
                ("Responsible choices", "Bio-degradable and recyclable options wherever they suit your application."),
                ("Easy specification", "Clear product families, sizes and options so ordering the right item is simple.")]
@@ -223,7 +228,7 @@ def about(c):
         para(c, f"<b>{t}</b>", bx + 14, y - 40, bw - 28, 10, "B", PAPER)
         para(c, d, bx + 14, y - 56, bw - 28, 8, "R", PAPER)
         y -= 118
-    rimage(c, "/img/cartons.jpg", M, 64, W - 2 * M, H * 0.42 - 84, 24)
+    rimage(c, "/img/warehouse-dark.jpg", M, 64, W - 2 * M, H * 0.42 - 84, 24)
     footer(c, len(PAGES), on_red=True)
 
 
@@ -353,15 +358,15 @@ def back_cover(c):
     text(c, "PACKAGING FOR WHAT YOU SHIP.", M + 28, H * 0.8 - 82, 22, "XB", RED)
     para(c, "Tell us about your products, loads and shipping routes. We will help you identify the right film, honeycomb, cartons and quantities — and supply the printing and safety items your team uses every day.",
          M + 28, H * 0.8 - 98, W - 2 * M - 56, 10.5, "R", GREY)
-    rows = [("PHONE", "[PHONE NUMBER]"), ("EMAIL", "[EMAIL ADDRESS]"), ("WEBSITE", "[WEBSITE]"), ("ADDRESS", "[BUSINESS ADDRESS]")]
-    y = H * 0.38 + 128
+    rows = [("PHONE", PHONE), ("EMAIL", EMAIL), ("ADDRESS", ADDRESS), ("PARTNERS", PARTNERS), ("WEBSITE", "[WEBSITE]")]
+    y = H * 0.38 + 136
     for i, (k, v) in enumerate(rows):
         rect(c, M + 28, y, 76, 22, RED if i % 2 == 0 else GREY, 6)
         c.setFont("B", 8)
         c.setFillColor(PAPER)
         c.drawCentredString(M + 66, y + 7.5, k)
-        text(c, v, M + 118, y + 6.5, 11, "B", INK)
-        y -= 30
+        ph = para(c, v, M + 118, y + 18, W - 2 * M - 146, 10.5, "B", INK, 12.5)
+        y -= max(32, ph + 14)
     c.setFillColor(PAPER)
     c.circle(W / 2, 182, 66, stroke=0, fill=1)
     c.drawImage(ImageReader(str(LOGO_MARK)), W / 2 - 34, 135, 68, 94, mask="auto", preserveAspectRatio=True)

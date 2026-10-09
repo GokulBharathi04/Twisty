@@ -8,7 +8,6 @@ import { FeaturedProducts } from "./home/FeaturedProducts";
 import { WhySection } from "./home/WhySection";
 import { PackagingSolutions } from "./home/PackagingSolutions";
 import { IndustriesSection, SustainableSection } from "./home/SustainableIndustries";
-import { CatalogueSection } from "./home/CatalogueSection";
 
 export default function Home() {
   useSeo(null, "Twisty Wrap Enterprises — stretch film, recyclable honeycomb, cartons, tapes, foams, printing, display and industrial safety supplies. Request an enquiry.");
@@ -23,7 +22,6 @@ export default function Home() {
       <PackagingSolutions />
       <SustainableSection />
       <IndustriesSection />
-      <CatalogueSection />
       <EnquiryBand title="Need the right packaging solution? Let’s specify it together." />
     </>
   );
