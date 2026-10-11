@@ -44,7 +44,6 @@ export const CONTACT = {
   phones: ["9500868288", "9445424938"],
   phone: "9500868288 / 9445424938",
   email: "twistywrapenterprises@outlook.com",
-  website: "[WEBSITE]",
   address: "No:25/1, 1st Main Road, North Jaganathan Nagar, Villivakkam, Chennai 600049",
 };
 

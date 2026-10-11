@@ -358,7 +358,7 @@ def back_cover(c):
     text(c, "PACKAGING FOR WHAT YOU SHIP.", M + 28, H * 0.8 - 82, 22, "XB", RED)
     para(c, "Tell us about your products, loads and shipping routes. We will help you identify the right film, honeycomb, cartons and quantities — and supply the printing and safety items your team uses every day.",
          M + 28, H * 0.8 - 98, W - 2 * M - 56, 10.5, "R", GREY)
-    rows = [("PHONE", PHONE), ("EMAIL", EMAIL), ("ADDRESS", ADDRESS), ("PARTNERS", PARTNERS), ("WEBSITE", "[WEBSITE]")]
+    rows = [("PHONE", PHONE), ("EMAIL", EMAIL), ("ADDRESS", ADDRESS), ("PARTNERS", PARTNERS)]
     y = H * 0.38 + 136
     for i, (k, v) in enumerate(rows):
         rect(c, M + 28, y, 76, 22, RED if i % 2 == 0 else GREY, 6)

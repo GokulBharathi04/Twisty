@@ -1,4 +1,4 @@
-import { Globe, Mail, MapPin, Phone, Users } from "lucide-react";
+import { Mail, MapPin, Phone, Users } from "lucide-react";
 import { useSeo } from "../hooks/useSeo";
 import { MaskLines, Reveal } from "../components/Reveal";
 import { PageHero } from "../components/Sections";
@@ -12,7 +12,6 @@ const ITEMS = [
   { Icon: Mail, k: "Email", v: <a href={`mailto:${CONTACT.email}`} className="break-all hover:text-brand">{CONTACT.email}</a> },
   { Icon: MapPin, k: "Address", v: CONTACT.address },
   { Icon: Users, k: "Managing Partners", v: PARTNERS.map((p) => <span key={p} className="block">{p}</span>) },
-  { Icon: Globe, k: "Website", v: CONTACT.website },
 ];
 
 export default function Contact() {
