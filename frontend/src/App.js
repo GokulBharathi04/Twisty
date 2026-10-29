@@ -11,7 +11,6 @@ import ProductDetail from "./pages/ProductDetail";
 import Sustainability from "./pages/Sustainability";
 import Applications from "./pages/Applications";
 import Contact from "./pages/Contact";
-import Catalogue from "./pages/Catalogue";
 import NotFound from "./pages/NotFound";
 
 let lenis;
@@ -46,7 +45,6 @@ function App() {
             <Route path="/products/:slug" element={<ProductDetail />} />
             <Route path="/sustainability" element={<Sustainability />} />
             <Route path="/applications" element={<Applications />} />
-            <Route path="/catalogue" element={<Catalogue />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/enquire" element={<Contact />} />
             <Route path="*" element={<NotFound />} />

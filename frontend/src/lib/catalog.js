@@ -1,10 +1,7 @@
 import data from "../data/catalog.json";
-import pages from "../data/cataloguePages.json";
 
 export const categories = data.categories;
 export const products = data.products;
-export const cataloguePages = pages;
-export const CATALOGUE_PDF = "/catalogue/twisty-wrap-catalogue.pdf";
 
 export const getProduct = (slug) => products.find((p) => p.slug === slug);
 export const getCategory = (id) => categories.find((c) => c.id === id);

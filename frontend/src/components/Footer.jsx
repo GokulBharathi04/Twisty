@@ -4,7 +4,7 @@ import { Logo } from "./Logo";
 import { useEnquiry } from "./EnquiryContext";
 import { CONTACT, categories } from "../lib/catalog";
 
-const QUICK = [["Home", "/"], ["About", "/about"], ["Products", "/products"], ["Sustainability", "/sustainability"], ["Applications", "/applications"], ["Catalogue", "/catalogue"], ["Contact", "/contact"]];
+const QUICK = [["Home", "/"], ["About", "/about"], ["Products", "/products"], ["Sustainability", "/sustainability"], ["Applications", "/applications"], ["Contact", "/contact"]];
 
 export const Footer = () => {
   const { openEnquiry } = useEnquiry();

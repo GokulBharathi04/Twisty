@@ -92,3 +92,6 @@ frontend/node_modules/.cache/default-development/2.pack
 credentials.json
 *.key
 .credentials
+
+# image branding preview sheet (regenerated locally)
+frontend/img-originals/_before-after.jpg

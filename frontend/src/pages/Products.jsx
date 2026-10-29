@@ -16,7 +16,7 @@ const FLAGS = [
 ];
 
 export default function Products() {
-  useSeo("Products", "Browse the Twisty Wrap Enterprises product catalogue: packaging, printing & display, industrial safety, stationery and sustainable products.");
+  useSeo("Products", "Browse the Twisty Wrap Enterprises product range: packaging, printing & display, industrial safety, stationery and sustainable products.");
   const [params, setParams] = useSearchParams();
   const category = params.get("category") || "all";
   const q = params.get("q") || "";
@@ -42,7 +42,7 @@ export default function Products() {
     <>
       <section className="pt-32 sm:pt-40">
         <div className="wrap">
-          <Reveal><p className="eyebrow flex items-center gap-3"><span className="h-2.5 w-2.5 rounded-[3px] bg-brand" />Interactive digital catalogue</p></Reveal>
+          <Reveal><p className="eyebrow flex items-center gap-3"><span className="h-2.5 w-2.5 rounded-[3px] bg-brand" />Full product range</p></Reveal>
           <h1 className="mt-6 text-4xl font-black uppercase leading-[0.92] tracking-tight sm:text-6xl lg:text-7xl">
             <MaskLines animateOnMount lines={["Find the right", <>material, <span className="text-brand">fast.</span></>]} />
           </h1>

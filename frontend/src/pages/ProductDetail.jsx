@@ -44,7 +44,7 @@ export default function ProductDetail() {
           </Link>
           <div className="mt-8 grid items-center gap-10 lg:grid-cols-12">
             <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} className="relative lg:col-span-6">
-              <div className="spotlight absolute -inset-10 -z-0" aria-hidden />
+              <div className="spotlight absolute -inset-4 sm:-inset-10 -z-0" aria-hidden />
               <div className="relative rounded-[36px] p-3 neu">
                 <div className="relative overflow-hidden rounded-[30px] [clip-path:polygon(0_0,100%_0,100%_86%,86%_100%,0_100%)]">
                   <img src={p.image} alt={p.name} className="aspect-[5/4] w-full object-cover" data-testid="product-hero-image" />
@@ -61,7 +61,6 @@ export default function ProductDetail() {
               <Reveal><p className="mt-6 max-w-xl text-base leading-relaxed text-brand-grey">{p.shortDescription}</p></Reveal>
               <div className="mt-8 flex flex-wrap gap-3">
                 <button className="btn-red" onClick={() => openEnquiry(p.name)} data-testid="product-enquire-button">{cta} <ArrowUpRight className="h-4 w-4" /></button>
-                <Link to="/catalogue" className="btn-neu" data-testid="product-catalogue-link">View in catalogue</Link>
               </div>
             </div>
           </div>

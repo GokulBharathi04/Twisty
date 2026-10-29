@@ -12,7 +12,7 @@ export const WhySection = () => (
     <div aria-hidden className="absolute -left-20 top-10 h-80 w-80 rounded-full bg-brand/20 blur-[120px]" />
     <div className="wrap relative grid gap-14 lg:grid-cols-12">
       <div className="lg:col-span-5 lg:sticky lg:top-32 lg:self-start">
-        <SectionHead light eyebrow="Why Twisty Wrap Enterprises" title={["Protect.", "Package.", "Perform.", "Sustain."]} text="Our closing promise in every catalogue is simple: help you choose the right packaging for what you ship — and keep supplying it dependably." />
+        <SectionHead light eyebrow="Why Twisty Wrap Enterprises" title={["Protect.", "Package.", "Perform.", "Sustain."]} text="Our promise is simple: help you choose the right packaging for what you ship — and keep supplying it dependably." />
       </div>
       <div className="space-y-5 lg:col-span-7">
         {REASONS.map((r, i) => (

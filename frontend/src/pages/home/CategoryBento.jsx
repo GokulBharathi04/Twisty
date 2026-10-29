@@ -9,14 +9,14 @@ export const CategoryBento = () => (
   <section className="wrap py-20 sm:py-28" data-testid="categories-section">
     <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
       <SectionHead eyebrow="Product categories" title={["Five ranges.", "One dependable supplier."]} text="Browse packaging, printing and display, industrial safety, business stationery and sustainable products." />
-      <Reveal><Link to="/products" className="btn-neu" data-testid="categories-view-all">View full catalogue <ArrowUpRight className="h-4 w-4" /></Link></Reveal>
+      <Reveal><Link to="/products" className="btn-neu" data-testid="categories-view-all">View all products <ArrowUpRight className="h-4 w-4" /></Link></Reveal>
     </div>
     <div className="mt-14 grid auto-rows-[300px] gap-5 sm:auto-rows-[280px] lg:grid-cols-6">
       {categories.map((c, i) => (
         <Reveal key={c.id} delay={i * 0.06} className={SPANS[i]}>
           <Link to={`/products?category=${c.id}`} className="group block h-full rounded-[30px] p-2.5 neu" data-testid={`category-tile-${c.id}`}>
             <div className="relative h-full overflow-hidden rounded-[24px]">
-              <img src={c.image} alt={c.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] group-hover:scale-110" />
+              <img src={c.image} alt={c.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform [transition-duration:1.2s] group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#14161A]/90 via-[#14161A]/35 to-transparent" />
               <span className="absolute left-5 top-5 rounded-full bg-white/90 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-brand-ink">
                 {String(productsIn(c.id).length).padStart(2, "0")} products
