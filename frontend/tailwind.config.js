@@ -20,15 +20,24 @@ module.exports = {
         mono: ['"JetBrains Mono"', 'monospace']
       },
       boxShadow: {
-        neu: '9px 9px 20px #C3CBD6, -9px -9px 20px #FFFFFF',
-        'neu-sm': '5px 5px 12px #C6CED8, -5px -5px 12px #FFFFFF',
-        'neu-lg': '18px 18px 40px #BEC7D2, -18px -18px 40px #FFFFFF',
-        'neu-in': 'inset 5px 5px 11px #C5CDD7, inset -5px -5px 11px #FFFFFF',
-        'neu-in-sm': 'inset 3px 3px 6px #C5CDD7, inset -3px -3px 6px #FFFFFF',
-        'neu-red': '6px 8px 20px rgba(226,31,38,0.32), -6px -6px 16px #FFFFFF'
+        // shadow colours are CSS variables (src/index.css) so a page can re-theme them
+        neu: '9px 9px 20px var(--sh-dark), -9px -9px 20px var(--sh-light)',
+        'neu-sm': '5px 5px 12px var(--sh-dark-sm), -5px -5px 12px var(--sh-light)',
+        'neu-lg': '18px 18px 40px var(--sh-dark-lg), -18px -18px 40px var(--sh-light)',
+        'neu-in': 'inset 5px 5px 11px var(--sh-dark-in), inset -5px -5px 11px var(--sh-light)',
+        'neu-in-sm': 'inset 3px 3px 6px var(--sh-dark-in), inset -3px -3px 6px var(--sh-light)',
+        'neu-red': '6px 8px 20px var(--sh-accent), -6px -6px 16px var(--sh-light)'
       },
       colors: {
-        brand: { DEFAULT: '#E21F26', dark: '#B5161C', ink: '#23252A', grey: '#5E6066', steel: '#8A8F98', base: '#E9EDF2' },
+        brand: {
+          DEFAULT: 'rgb(var(--c-brand) / <alpha-value>)',
+          dark: 'rgb(var(--c-brand-dark) / <alpha-value>)',
+          ink: 'rgb(var(--c-ink) / <alpha-value>)',
+          grey: 'rgb(var(--c-grey) / <alpha-value>)',
+          steel: 'rgb(var(--c-steel) / <alpha-value>)',
+          base: 'rgb(var(--c-base) / <alpha-value>)',
+          surface: 'rgb(var(--c-surface) / <alpha-value>)',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

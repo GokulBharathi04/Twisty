@@ -9,7 +9,8 @@ export const NAV = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/products", label: "Products" },
-  { to: "/sustainability", label: "Sustainability" },
+  // hover: the eco range hovers in the bio catalogue's teal instead of brand red
+  { to: "/sustainability", label: "Sustainable Products", hover: "hover:text-[#2A6B5C]" },
   { to: "/applications", label: "Applications" },
   { to: "/contact", label: "Contact" },
 ];
@@ -47,7 +48,7 @@ export const Header = () => {
               data-testid={`nav-${n.label.toLowerCase()}-link`}
               className={({ isActive }) =>
                 `relative rounded-full px-3.5 py-2 font-display text-[13px] font-bold uppercase tracking-[0.1em] transition-colors ${
-                  isActive ? "text-brand shadow-neu-in-sm" : "text-brand-ink hover:text-brand"
+                  isActive ? "text-brand shadow-neu-in-sm" : `text-brand-ink ${n.hover || "hover:text-brand"}`
                 }`
               }
             >

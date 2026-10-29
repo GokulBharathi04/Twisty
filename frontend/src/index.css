@@ -2,10 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Site palette. Tailwind's brand-* colours and neu-* shadows read these, so a
+   page can re-theme itself by overriding them on <html> (see .theme-bio). */
 :root {
-    --base: #e9edf2;
-    --red: #e21f26;
-    --ink: #23252a;
+    --c-brand: 226 31 38;
+    --c-brand-dark: 181 22 28;
+    --c-ink: 35 37 42;
+    --c-grey: 94 96 102;
+    --c-steel: 138 143 152;
+    --c-base: 233 237 242;
+    --c-surface: 233 237 242;
+    --c-eyebrow: 94 96 102;
+    --sh-dark: #C3CBD6;
+    --sh-dark-sm: #C6CED8;
+    --sh-dark-lg: #BEC7D2;
+    --sh-dark-in: #C5CDD7;
+    --sh-light: #FFFFFF;
+    --sh-accent: rgba(226, 31, 38, 0.32);
+    --footer: #1E2026;
+    --footer-panel: #25282F;
+    --footer-panel-dark: #17191d;
+    --footer-panel-light: #30343c;
+    --emboss: #F23A40;
+}
+
+/* Sustainable Products: the palette of the Sustainable & Bio-Degradable Range
+   catalogue (deep green #123F36, teal #2A6B5C, gold #C49A45, cream #E8DCC4,
+   card #F4EEDE, body text #34463F). Set on <html> by the Sustainability page. */
+html.theme-bio {
+    --c-brand: 18 63 54;
+    --c-brand-dark: 42 107 92;
+    --c-ink: 18 63 54;
+    --c-grey: 52 70 63;
+    --c-steel: 104 122 112;
+    --c-base: 232 220 196;
+    --c-surface: 244 238 222;
+    --c-eyebrow: 150 113 38;
+    --sh-dark: #CDBE9C;
+    --sh-dark-sm: #CFC1A1;
+    --sh-dark-lg: #C9B995;
+    --sh-dark-in: #D3C5A6;
+    --sh-light: #FBF6EC;
+    --sh-accent: rgba(18, 63, 54, 0.3);
+    --footer: #123F36;
+    --footer-panel: #17493F;
+    --footer-panel-dark: #0C2E27;
+    --footer-panel-light: #1F5A4D;
+    --emboss: #D9B160;
 }
 
 html.lenis, html.lenis body { height: auto; }
@@ -15,13 +58,13 @@ html.lenis, html.lenis body { height: auto; }
 body {
     margin: 0;
     font-family: "Manrope", sans-serif;
-    background: var(--base);
-    color: var(--ink);
+    background: rgb(var(--c-base));
+    color: rgb(var(--c-ink));
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
 }
 
-::selection { background: var(--red); color: #fff; }
+::selection { background: rgb(var(--c-brand)); color: #fff; }
 
 @layer base {
     :root {
@@ -55,8 +98,8 @@ body {
 
 @layer components {
     .wrap { @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12; }
-    .eyebrow { @apply font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-brand-grey; }
-    .neu { @apply bg-brand-base shadow-neu; }
+    .eyebrow { @apply font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em]; color: rgb(var(--c-eyebrow)); }
+    .neu { @apply bg-brand-surface shadow-neu; }
     .neu-in { @apply bg-brand-base shadow-neu-in; }
     .btn {
         @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-display text-sm font-bold uppercase tracking-[0.12em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-brand-base;
@@ -66,12 +109,23 @@ body {
     .btn-red { @apply btn bg-brand text-white shadow-neu-red hover:bg-brand-dark; }
     .btn-red:hover { transform: translateY(-2px); }
     .btn-neu { @apply btn bg-brand-base text-brand-ink shadow-neu-sm hover:text-brand; }
-    .btn-neu:hover { box-shadow: inset 3px 3px 7px #C5CDD7, inset -3px -3px 7px #FFFFFF; }
+    .btn-neu:hover { box-shadow: inset 3px 3px 7px var(--sh-dark-in), inset -3px -3px 7px var(--sh-light); }
     .field {
         @apply w-full rounded-2xl bg-brand-base px-4 py-3.5 text-sm text-brand-ink shadow-neu-in-sm placeholder:text-[#7a7f88] focus:outline-none focus:ring-2 focus:ring-brand/40;
         transition: box-shadow .2s ease;
     }
     .chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wider; }
+}
+
+/* Raised lettering on the footer's pressed-in panel: a light edge top-left,
+   a hard shadow bottom-right and a soft drop shadow below. */
+.emboss {
+    color: var(--emboss);
+    text-shadow:
+        -1px -1px 0 rgba(255, 255, 255, 0.35),
+        1px 1px 0 rgba(0, 0, 0, 0.35),
+        2px 3px 0 rgba(0, 0, 0, 0.3),
+        4px 7px 14px rgba(0, 0, 0, 0.45);
 }
 
 .line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; }

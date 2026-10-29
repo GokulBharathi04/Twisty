@@ -4,16 +4,16 @@ import { Logo } from "./Logo";
 import { useEnquiry } from "./EnquiryContext";
 import { CONTACT, categories } from "../lib/catalog";
 
-const QUICK = [["Home", "/"], ["About", "/about"], ["Products", "/products"], ["Sustainability", "/sustainability"], ["Applications", "/applications"], ["Contact", "/contact"]];
+const QUICK = [["Home", "/"], ["About", "/about"], ["Products", "/products"], ["Sustainable Products", "/sustainability"], ["Applications", "/applications"], ["Contact", "/contact"]];
 
 export const Footer = () => {
   const { openEnquiry } = useEnquiry();
   return (
-    <footer className="relative mt-10 overflow-hidden bg-[#1E2026] text-zinc-300" data-testid="site-footer">
+    <footer className="relative mt-10 overflow-hidden bg-[var(--footer)] text-zinc-300" data-testid="site-footer">
       <div className="wrap py-16 sm:py-20">
-        <div className="flex flex-col items-start justify-between gap-8 rounded-[28px] bg-[#25282F] p-8 shadow-[inset_6px_6px_14px_#17191d,inset_-6px_-6px_14px_#30343c] sm:p-12 lg:flex-row lg:items-center">
+        <div className="flex flex-col items-start justify-between gap-8 rounded-[28px] bg-[var(--footer-panel)] p-8 shadow-[inset_6px_6px_14px_var(--footer-panel-dark),inset_-6px_-6px_14px_var(--footer-panel-light)] sm:p-12 lg:flex-row lg:items-center">
           <h2 className="max-w-xl text-3xl font-extrabold uppercase leading-none text-white sm:text-5xl">
-            Need the right <span className="text-brand">packaging</span> solution?
+            Need the right <span className="emboss">packaging</span> solution?
           </h2>
           <button className="btn-red" onClick={() => openEnquiry("")} data-testid="footer-enquiry-button">
             Request an enquiry <ArrowUpRight className="h-4 w-4" />

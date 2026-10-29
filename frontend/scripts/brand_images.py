@@ -26,6 +26,11 @@ LOGO_MARK = Image.open(ROOT / "public" / "logo-mark.png").convert("RGBA")
 # A real company's trade-show stand: not rebranded (see the project notes).
 SKIP = {"banner.jpg"}
 
+# Product logos are drawn smaller and fainter than their PLAN size so they read
+# as part of the product, not as a stamp. Signage (keep=True) stays as planned.
+SCALE = 0.7
+FADE = 0.75
+
 # remove: (x0, y0, x1, y1, mode)  mode: dark | absdark | light | nonwhite | yellow | lightlocal
 # brand:  dict(at=(cx, cy), w=width, rot=deg, mode=print|ink|white|decal, op=opacity, logo=mark|full)
 PLAN = {
@@ -39,7 +44,7 @@ PLAN = {
     },
     "display.jpg": {
         "remove": [(520, 400, 1330, 1400, "absdark")],
-        "brand": [dict(at=(925, 900), w=600, rot=0, mode="ink", op=1.0, logo="full")],
+        "brand": [dict(at=(925, 900), w=600, rot=0, mode="ink", op=1.0, logo="full", keep=True)],
     },
     "eco.jpg": {
         "remove": [(790, 320, 1090, 615, "absdark")],
@@ -77,7 +82,7 @@ PLAN = {
         "brand": [dict(at=(790, 330), w=120, rot=-10, mode="white", op=0.8)],
     },
     "stretch.jpg": {"brand": [dict(at=(440, 520), w=110, rot=0, mode="print", op=0.6)]},
-    "sunboard.jpg": {"brand": [dict(at=(630, 420), w=160, rot=0, mode="ink", op=1.0, logo="full")]},
+    "sunboard.jpg": {"brand": [dict(at=(630, 420), w=160, rot=0, mode="ink", op=1.0, logo="full", keep=True)]},
     "tape.jpg": {"brand": [dict(at=(520, 560), w=110, rot=-20, mode="white", op=0.9)]},
     "thermal.jpg": {"brand": [dict(at=(1091, 835), w=90, rot=0, mode="ink", op=0.7)]},
     "vests.jpg": {"brand": [dict(at=(1150, 1550), w=160, rot=0, mode="print", op=0.55)]},
@@ -125,7 +130,8 @@ def remove_text(img, removes):
 
 def styled_logo(spec):
     logo = LOGO_FULL if spec.get("logo") == "full" else LOGO_MARK
-    w = spec["w"]
+    keep = spec.get("keep")
+    w = spec["w"] if keep else round(spec["w"] * SCALE)
     logo = logo.resize((w, round(logo.height * w / logo.width)), Image.LANCZOS)
     alpha = logo.getchannel("A")
     mode = spec["mode"]
@@ -144,7 +150,8 @@ def styled_logo(spec):
     else:  # ink: full colour print
         layer = logo
     layer = layer.rotate(spec.get("rot", 0), resample=Image.BICUBIC, expand=True)
-    a = layer.getchannel("A").point(lambda v: round(v * spec.get("op", 1)))
+    op = spec.get("op", 1) * (1 if keep else FADE)
+    a = layer.getchannel("A").point(lambda v: round(v * op))
     layer.putalpha(a)
     return layer.filter(ImageFilter.GaussianBlur(0.6)), mode
 
@@ -160,22 +167,32 @@ def place(img, spec):
         ink.alpha_composite(layer)
         mult = Image.fromarray((np.array(patch, np.float32)[..., :3] * np.array(ink, np.float32)[..., :3] / 255).astype(np.uint8))
         base.paste(mult, pos)
-    else:
-        base.alpha_composite(layer, pos)
+    else:  # light the logo with the surface under it, so folds and shadows cross it
+        patch = np.array(base.crop((pos[0], pos[1], pos[0] + layer.width, pos[1] + layer.height)), np.float32)[..., :3]
+        lum = cv2.GaussianBlur(patch.mean(axis=2), (0, 0), 3)
+        a = np.array(layer.getchannel("A"), np.float32)
+        ref = (lum * a).sum() / max(a.sum(), 1)
+        shade = np.clip(lum / max(ref, 1), 0.55, 1.2)[..., None]
+        rgb = np.clip(np.array(layer, np.float32)[..., :3] * shade, 0, 255).astype(np.uint8)
+        lit = Image.fromarray(rgb).convert("RGBA")
+        lit.putalpha(layer.getchannel("A"))
+        base.alpha_composite(lit, pos)
     return base.convert("RGB")
 
 
 def corner_logo(img):
-    w = max(150, round(img.width * 0.13))
+    """A small, quiet maker's mark: a soft plate that lets the photo show through."""
+    w = max(90, round(img.width * 0.075))
     logo = LOGO_FULL.resize((w, round(LOGO_FULL.height * w / LOGO_FULL.width)), Image.LANCZOS)
     pad = round(w * 0.1)
     plate = Image.new("RGBA", (logo.width + pad * 2, logo.height + pad * 2), (0, 0, 0, 0))
     shadow = Image.new("RGBA", plate.size, (0, 0, 0, 0))
-    ImageDraw.Draw(shadow).rounded_rectangle((0, 4, plate.width - 1, plate.height - 1), radius=pad, fill=(0, 0, 0, 70))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(6))
-    ImageDraw.Draw(plate).rounded_rectangle((0, 0, plate.width - 1, plate.height - 1), radius=pad, fill=(255, 255, 255, 235))
+    ImageDraw.Draw(shadow).rounded_rectangle((0, 4, plate.width - 1, plate.height - 1), radius=pad, fill=(0, 0, 0, 28))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(5))
+    ImageDraw.Draw(plate).rounded_rectangle((0, 0, plate.width - 1, plate.height - 1), radius=pad, fill=(255, 255, 255, 170))
     plate.alpha_composite(logo, (pad, pad))
-    margin = round(img.width * 0.025)
+    plate.putalpha(plate.getchannel("A").point(lambda v: round(v * 0.85)))
+    margin = round(img.width * 0.03)
     pos = (img.width - plate.width - margin, margin)
     base = img.convert("RGBA")
     base.alpha_composite(shadow, (pos[0], pos[1] + 2))
@@ -188,6 +205,9 @@ def main():
     for src in sorted(IMG.glob("*.jpg")):
         if not (ORIG / src.name).exists():
             shutil.copy2(src, ORIG / src.name)
+    # Bio catalogue photos (rendered from the PDF) carry only the corner mark
+    for src in sorted(ORIG.glob("bio-*.jpg")):
+        PLAN.setdefault(src.name, {})
     for name, plan in PLAN.items():
         img = Image.open(ORIG / name).convert("RGB")
         if plan.get("remove"):
