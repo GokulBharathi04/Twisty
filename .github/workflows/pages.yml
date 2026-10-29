@@ -1,0 +1,57 @@
+# Builds the React frontend and publishes it to GitHub Pages on every push to
+# main. Pages serves the site from /Twisty/, so PUBLIC_URL sets that base path;
+# 404.html is a copy of index.html so deep links (/products/...) load the app.
+# Only the website is hosted: the FastAPI enquiry backend is not deployed, and
+# the enquiry form shows its "temporarily unavailable" fallback.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: yarn
+          cache-dependency-path: frontend/yarn.lock
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --network-timeout 600000
+      - name: Build
+        env:
+          PUBLIC_URL: /Twisty
+          CI: false
+        run: yarn build
+      - name: Single-page app fallback
+        run: cp build/index.html build/404.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ClipboardCheck, Leaf, ShieldCheck } from "lucide-react";
 import { Reveal, SectionHead } from "../../components/Reveal";
+import { asset } from "../../lib/asset";
 
 const PILLARS = [
   { Icon: ShieldCheck, t: "Reliable protection", d: "Materials strong enough to hold loads together and protective enough to safeguard products through storage, handling and transport." },
@@ -34,7 +35,7 @@ export const IntroSection = () => (
             <motion.img
               variants={{ hidden: { scale: 1.25 }, show: { scale: 1 } }}
               transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-              src="/img/warehouse.jpg"
+              src={asset("/img/warehouse.jpg")}
               alt="Warehouse aisle stocked with palletised goods"
               className="aspect-[5/4] w-full object-cover"
             />

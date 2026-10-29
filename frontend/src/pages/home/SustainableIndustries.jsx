@@ -3,6 +3,7 @@ import { iconFor } from "../../lib/icons";
 import { ArrowUpRight, Leaf, Recycle, Ruler } from "lucide-react";
 import { Reveal, SectionHead } from "../../components/Reveal";
 import { industries } from "../../lib/catalog";
+import { asset } from "../../lib/asset";
 
 const ECO = [
   { Icon: Leaf, t: "Bio-degradable options", d: "Bio-degradable / oxo-biodegradable stretch film and eco-material printing." },
@@ -15,7 +16,7 @@ export const SustainableSection = () => (
     <div className="grid items-center gap-10 rounded-[36px] p-5 neu sm:p-8 lg:grid-cols-2 lg:p-10">
       <Reveal>
         <div className="relative overflow-hidden rounded-[28px]">
-          <img src="/img/eco2.jpg" alt="Kraft paper based eco-friendly packaging" loading="lazy" className="aspect-[4/3] w-full object-cover" />
+          <img src={asset("/img/eco2.jpg")} alt="Kraft paper based eco-friendly packaging" loading="lazy" className="aspect-[4/3] w-full object-cover" />
           <span className="absolute left-5 top-5 rounded-full bg-emerald-700 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-white">Increasingly sustainable</span>
         </div>
       </Reveal>

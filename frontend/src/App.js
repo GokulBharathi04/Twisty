@@ -33,7 +33,7 @@ const SmoothScroll = () => {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <EnquiryProvider>
         <SmoothScroll />
         <Header />

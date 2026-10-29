@@ -5,10 +5,11 @@ import { MaskLines, Reveal, SectionHead } from "../components/Reveal";
 import { EnquiryBand, PageHero } from "../components/Sections";
 import { Marquee } from "../components/Marquee";
 import { PARTNERS, categories, getProduct, productsIn } from "../lib/catalog";
+import { asset } from "../lib/asset";
 
 const FLAGSHIP = [
-  { t: "Stretch Film — Bio & Non Bio", d: "High-cling film in bio-degradable and conventional LLDPE grades that binds pallets and loose loads into one stable unit.", slugs: ["stretch-film-biodegradable", "stretch-film-conventional"], img: "/img/stretch.jpg" },
-  { t: "Honeycomb Based Products", d: "Recyclable paper honeycomb pallets, boxes, die cuts, partitions, displays, doors and wraps.", slugs: ["honeycomb-pallets", "honeycomb-boxes", "honeycomb-wrap"], img: "/img/honeycomb.jpg" },
+  { t: "Stretch Film — Bio & Non Bio", d: "High-cling film in bio-degradable and conventional LLDPE grades that binds pallets and loose loads into one stable unit.", slugs: ["stretch-film-biodegradable", "stretch-film-conventional"], img: asset("/img/stretch.jpg") },
+  { t: "Honeycomb Based Products", d: "Recyclable paper honeycomb pallets, boxes, die cuts, partitions, displays, doors and wraps.", slugs: ["honeycomb-pallets", "honeycomb-boxes", "honeycomb-wrap"], img: asset("/img/honeycomb.jpg") },
 ];
 
 const BLOCKS = [
@@ -28,7 +29,7 @@ export default function About() {
         eyebrow="About us"
         title={<MaskLines animateOnMount lines={["Packaging that", <>keeps its <span className="text-brand">promise</span></>]} />}
         text="Twisty Wrap Enterprises supplies packaging solutions built to protect your goods from the warehouse floor to the customer’s door — secure, dependable and increasingly sustainable."
-        image="/img/racks.jpg"
+        image={asset("/img/racks.jpg")}
       />
       <div className="mt-16"><Marquee items={["Secure", "Dependable", "Sustainable"]} /></div>
       <section className="wrap py-20 sm:py-28" data-testid="about-flagship">

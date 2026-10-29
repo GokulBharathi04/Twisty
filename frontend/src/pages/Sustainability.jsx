@@ -4,12 +4,13 @@ import { MaskLines, Reveal, SectionHead } from "../components/Reveal";
 import { EnquiryBand, PageHero } from "../components/Sections";
 import { ProductCard } from "../components/ProductCard";
 import { products } from "../lib/catalog";
+import { asset } from "../lib/asset";
 
 const PILLARS = [
-  { Icon: Leaf, t: "Bio-degradable options", img: "/img/film-roll.jpg", d: "Our stretch film is offered in biodegradable / oxo-biodegradable grades as well as conventional LLDPE, so you can choose the grade that suits your sustainability direction and your load. Other bio-based materials — compostable pouches and bio-based void-fill — can be developed on request." },
-  { Icon: Recycle, t: "Recyclable materials", img: "/img/honeycomb.jpg", d: "Recyclable honeycomb is a paper-based cellular packaging material used for cushioning, void filling and box lining. Honeycomb pallets, boxes, partitions, displays and door cores offer a lightweight alternative to wood and foam that can be recycled with paper waste where facilities exist." },
-  { Icon: Ruler, t: "Right-sizing", img: "/img/carton-open.jpg", d: "Cartons custom-sized to your product’s exact dimensions and inserts die-cut to its shape help reduce unnecessary material, void fill and freight volume — a practical step that also lowers damage in transit." },
-  { Icon: Printer, t: "Eco-friendly printing", img: "/img/eco2.jpg", d: "Printing on kraft paper, recycled board and bio-films, with soy- or water-based inks on request, and recyclable PVC-free banner substrates for factory signage and branding." },
+  { Icon: Leaf, t: "Bio-degradable options", img: asset("/img/film-roll.jpg"), d: "Our stretch film is offered in biodegradable / oxo-biodegradable grades as well as conventional LLDPE, so you can choose the grade that suits your sustainability direction and your load. Other bio-based materials — compostable pouches and bio-based void-fill — can be developed on request." },
+  { Icon: Recycle, t: "Recyclable materials", img: asset("/img/honeycomb.jpg"), d: "Recyclable honeycomb is a paper-based cellular packaging material used for cushioning, void filling and box lining. Honeycomb pallets, boxes, partitions, displays and door cores offer a lightweight alternative to wood and foam that can be recycled with paper waste where facilities exist." },
+  { Icon: Ruler, t: "Right-sizing", img: asset("/img/carton-open.jpg"), d: "Cartons custom-sized to your product’s exact dimensions and inserts die-cut to its shape help reduce unnecessary material, void fill and freight volume — a practical step that also lowers damage in transit." },
+  { Icon: Printer, t: "Eco-friendly printing", img: asset("/img/eco2.jpg"), d: "Printing on kraft paper, recycled board and bio-films, with soy- or water-based inks on request, and recyclable PVC-free banner substrates for factory signage and branding." },
 ];
 
 export default function Sustainability() {
@@ -21,7 +22,7 @@ export default function Sustainability() {
         eyebrow="Sustainability"
         title={<MaskLines animateOnMount lines={["Increasingly", <span key="s" className="text-emerald-700">sustainable</span>, "by design"]} />}
         text="We help customers make responsible packaging choices with factual information — what a material is, how it performs, and how it can be disposed of or recycled."
-        image="/img/eco.jpg"
+        image={asset("/img/eco.jpg")}
       />
       <section className="wrap space-y-8 py-20 sm:py-28">
         {PILLARS.map((p, i) => (
