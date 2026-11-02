@@ -1,8 +1,10 @@
+# TEST COPY ONLY. The live site is hosted on Cloudflare Pages (see DEPLOY-CLOUDFLARE.md).
 # Builds the React frontend and publishes it to GitHub Pages on every push to
 # main. Pages serves the site from /Twisty/, so PUBLIC_URL sets that base path;
 # 404.html is a copy of index.html so deep links (/products/...) load the app.
-# Only the website is hosted: the FastAPI enquiry backend is not deployed, and
-# the enquiry form shows its "temporarily unavailable" fallback.
+# There is no backend here, so REACT_APP_ENQUIRIES=off makes the enquiry form
+# show its "contact us directly" message, and SITE_NOINDEX keeps this copy out
+# of search results (robots.txt disallows everything).
 name: Deploy to GitHub Pages
 
 on:
@@ -37,6 +39,9 @@ jobs:
       - name: Build
         env:
           PUBLIC_URL: /Twisty
+          REACT_APP_ENQUIRIES: "off"
+          SITE_URL: https://gokulbharathi04.github.io/Twisty
+          SITE_NOINDEX: "1"
           CI: false
         run: yarn build
       - name: Single-page app fallback

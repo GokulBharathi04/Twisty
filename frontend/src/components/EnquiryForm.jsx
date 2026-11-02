@@ -3,8 +3,15 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { CheckCircle2, Loader2, Paperclip } from "lucide-react";
 
-const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api` : null;
-const EMPTY = { full_name: "", company: "", email: "", phone: "", city: "", quantity: "", specification: "", message: "" };
+// Where enquiries are posted:
+//  - Cloudflare Pages (production): same-origin /api, served by functions/api/enquiries.js.
+//  - REACT_APP_BACKEND_URL set: that server (e.g. the local FastAPI backend on :8001).
+//  - REACT_APP_ENQUIRIES=off: no backend (GitHub Pages test copy); the form shows a "contact us directly" message.
+const API =
+  process.env.REACT_APP_ENQUIRIES === "off" ? null
+  : process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api`
+  : `${process.env.PUBLIC_URL}/api`;
+const EMPTY = { full_name: "", company: "", email: "", phone: "", city: "", quantity: "", specification: "", message: "", website: "" };
 
 const Field = ({ label, name, required, type = "text", value, onChange, span }) => (
   <label className={`block ${span ? "sm:col-span-2" : ""}`}>
@@ -36,7 +43,10 @@ export const EnquiryForm = ({ product = "", onDone }) => {
       setState({ status: "done", error: "", ref: data?.reference ?? "" });
     } catch (err) {
       const d = err?.response?.data?.detail;
-      setState({ status: "error", error: typeof d === "string" ? d : "Please check the required fields and try again." });
+      const fallback = err?.response && err.response.status < 500
+        ? "Please check the required fields and try again."
+        : "We couldn't send your enquiry just now. Please try again, or contact us directly.";
+      setState({ status: "error", error: typeof d === "string" ? d : fallback });
     }
   };
 
@@ -55,6 +65,9 @@ export const EnquiryForm = ({ product = "", onDone }) => {
 
   return (
     <form onSubmit={submit} className="grid grid-cols-1 gap-4 sm:grid-cols-2" data-testid="enquiry-form">
+      {/* Honeypot for spam bots: hidden from people and screen readers, left empty by real visitors. */}
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden"
+        value={form.website} onChange={set} />
       <Field label="Full name" name="full_name" required value={form.full_name} onChange={set} />
       <Field label="Company name" name="company" required value={form.company} onChange={set} />
       <Field label="Email" name="email" type="email" required value={form.email} onChange={set} />

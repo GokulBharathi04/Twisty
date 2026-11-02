@@ -95,3 +95,11 @@ credentials.json
 
 # image branding preview sheet (regenerated locally)
 frontend/img-originals/_before-after.jpg
+
+# Local backend dev output
+backend/outbox/
+backend/uploads/
+
+# Cloudflare local dev
+.wrangler/
+.dev.vars

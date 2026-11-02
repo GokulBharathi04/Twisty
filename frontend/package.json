@@ -67,6 +67,9 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
+    "postbuild": "node scripts/sitemap.mjs",
+    "cf:dev": "npx wrangler@4 pages dev",
+    "cf:deploy": "npx wrangler@4 pages deploy",
     "test": "craco test"
   },
   "browserslist": {
