@@ -15,10 +15,13 @@ EMAIL_FROM_NAME = "Twisty Wrap Enterprises"
 [[d1_databases]]
 binding = "DB"
 database_name = "twisty-enquiries"
-# Replace with the id printed by `npx wrangler d1 create twisty-enquiries` before the first deploy.
-database_id = "00000000-0000-0000-0000-000000000000"
+# Created 2026-11-02 on the pickurpixel@gmail.com account (region APAC).
+database_id = "97fd1ba9-632f-45fa-ace3-726d57685323"
 migrations_dir = "migrations"
 
-[[r2_buckets]]
-binding = "ATTACHMENTS"
-bucket_name = "twisty-enquiry-attachments"
+# Disabled until R2 is enabled on the account (dashboard → R2), then:
+#   npx wrangler@4 r2 bucket create twisty-enquiry-attachments
+# and uncomment. Without it, attachments are still emailed (once Resend is set up) but not stored.
+# [[r2_buckets]]
+# binding = "ATTACHMENTS"
+# bucket_name = "twisty-enquiry-attachments"
