@@ -21,6 +21,7 @@ User choices: full multi-page site; enquiries saved to DB + Resend email; PDF + 
 ## Backlog
 - 2026-10-09: Removed Home catalogue (flip-book) section; added real contact (phones, email, Chennai address + Google map), Managing Partners (Sathanand.M, Harish Kumar.S) on About/Contact/PDF, Flagship products (Stretch Film Bio & Non Bio, Honeycomb) on Home/About/PDF. Fixed mobile overflow on enquiry form.
 - 2026-10-11: Enquiry notifications now go to twistywrapenterprises@outlook.com (reply-to same); website line removed from site and PDF (no website yet).
+- 2026-11-02: Company email changed to admin@twistywrapenterprises.com (site contact, PDF catalogue builder, enquiry notifications via ENQUIRY_NOTIFY_EMAIL).
 - P0: (done) notification inbox set.
 - P1: Password-protected admin page to view enquiries and download attachments.
 - P2: Real product photos from the company; per-product image galleries.

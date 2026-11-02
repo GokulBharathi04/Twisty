@@ -1,4 +1,4 @@
-"""Builds the flat Twisty Wrap PDF catalogue + page previews for the website flip-book."""
+﻿"""Builds the flat Twisty Wrap PDF catalogue + page previews for the website flip-book."""
 import io
 import json
 from pathlib import Path
@@ -30,9 +30,9 @@ LOGO_FULL = PUB / "logo-full.png"
 LOGO_MARK = PUB / "logo-mark.png"
 PAGES = []
 PHONE = "9500868288 / 9445424938"
-EMAIL = "twistywrapenterprises@outlook.com"
+EMAIL = "admin@twistywrapenterprises.com"
 ADDRESS = "No:25/1, 1st Main Road, North Jaganathan Nagar, Villivakkam, Chennai 600049"
-PARTNERS = "Sathanand.M  ·  Harish Kumar.S"
+PARTNERS = "Sathanand.M  Â·  Harish Kumar.S"
 
 
 def jpeg(im, q=82):
@@ -91,7 +91,7 @@ def footer(c, n, on_red=False):
     c.setStrokeColor(col)
     c.setLineWidth(0.6)
     c.line(M, 34, W - M - 40, 34)
-    text(c, "TWISTY WRAP ENTERPRISES  ·  PRODUCT CATALOGUE", M, 22, 7, "M", col)
+    text(c, "TWISTY WRAP ENTERPRISES  Â·  PRODUCT CATALOGUE", M, 22, 7, "M", col)
     rect(c, W - M - 26, 18, 26, 26, PAPER if on_red else RED, 6)
     c.setFont("B", 10)
     c.setFillColor(RED if on_red else PAPER)
@@ -158,9 +158,9 @@ def cover(c):
     c.drawImage(ImageReader(str(LOGO_MARK)), M + 26, panel_bottom + 34, 80, 110, mask="auto", preserveAspectRatio=True)
     text(c, "TWISTY WRAP", M + 128, panel_bottom + 98, 44, "XB", PAPER)
     text(c, "ENTERPRISES", M + 130, panel_bottom + 56, 34, "XB", HexColor("#FF3A40"))
-    text(c, "PROTECT  ·  PACKAGE  ·  PERFORM  ·  SUSTAIN", M + 131, panel_bottom + 34, 9, "M", HexColor("#F2F3F5"))
+    text(c, "PROTECT  Â·  PACKAGE  Â·  PERFORM  Â·  SUSTAIN", M + 131, panel_bottom + 34, 9, "M", HexColor("#F2F3F5"))
     # top label
-    text(c, "PACKAGING  ·  PRINTING  ·  INDUSTRIAL SUPPLIES", M, H - 50, 9, "M", PAPER)
+    text(c, "PACKAGING  Â·  PRINTING  Â·  INDUSTRIAL SUPPLIES", M, H - 50, 9, "M", PAPER)
     rect(c, W - M - 64, H - 58, 64, 22, RED, 11)
     c.setFont("B", 9)
     c.setFillColor(PAPER)
@@ -170,17 +170,17 @@ def cover(c):
     rect(c, M, 154, 46, 46, GREY, 12)
     text(c, "PRODUCT", M + 64, 222, 40, "XB", INK)
     text(c, "CATALOGUE", M + 64, 182, 40, "XB", RED)
-    para(c, "Packaging solutions built to protect your goods from the warehouse floor to the customer’s door — secure, dependable and increasingly sustainable.",
+    para(c, "Packaging solutions built to protect your goods from the warehouse floor to the customerâ€™s door â€” secure, dependable and increasingly sustainable.",
          M + 64, 168, 360, 10.5, "R", GREY)
     stripes(c, M, 60, 180, RED)
-    text(c, f"{EMAIL}   ·   {PHONE}   ·   Chennai", M, 40, 8, "M", GREY)
+    text(c, f"{EMAIL}   Â·   {PHONE}   Â·   Chennai", M, 40, 8, "M", GREY)
 
 
 def contents(c):
     new_page(c, "Contents")
     rect(c, 0, 0, W * 0.44, H, RED, 0)
     rimage(c, "/img/warehouse.jpg", 26, H * 0.42, W * 0.44 - 52, H * 0.5, 22)
-    text(c, "“", 32, H * 0.36, 60, "XB", PAPER)
+    text(c, "â€œ", 32, H * 0.36, 60, "XB", PAPER)
     text(c, "INTRO", 34, H * 0.30, 34, "XB", PAPER)
     text(c, "DUCTION", 34, H * 0.30 - 34, 34, "XB", PAPER)
     para(c, "Twisty Wrap Enterprises supplies packaging, printing and industrial materials that are strong enough to hold loads together, protective enough to safeguard products and practical for storage and transportation.",
@@ -212,7 +212,7 @@ def about(c):
     rect(c, M, H * 0.42, W * 0.58, H * 0.42, PAPER, 26)
     tx, tw = M + 26, W * 0.58 - 52
     text(c, "OUR STORY", tx, H * 0.84 - 46, 14, "XB", INK)
-    h = para(c, "We supply packaging solutions built to protect your goods from the warehouse floor to the customer’s door — secure, dependable and increasingly sustainable.", tx, H * 0.84 - 58, tw, 11, "M", INK)
+    h = para(c, "We supply packaging solutions built to protect your goods from the warehouse floor to the customerâ€™s door â€” secure, dependable and increasingly sustainable.", tx, H * 0.84 - 58, tw, 11, "M", INK)
     h2 = para(c, "Our flagship products are <b>Stretch Film (Bio &amp; Non Bio-Degradable)</b> and <b>Honeycomb based products</b>. Alongside them we supply cartons, tapes, foams, printing and workplace safety supplies, designed around the way your business stores, handles and ships its products.",
          tx, H * 0.84 - 70 - h, tw, 9.5, "R", GREY)
     para(c, f"<b>Managing Partners:</b> {PARTNERS}", tx, H * 0.84 - 80 - h - h2, tw, 9.5, "M", INK)
@@ -310,7 +310,7 @@ def list_page(c, cat, items, idx_start):
         c.drawCentredString(x0 + 20, y - 18, f"{idx_start + i:02d}")
         h = para(c, p["name"].upper(), x0 + 54, y + 2, w0 - 54, 11.5, "XB", INK, 13)
         h += para(c, p["shortDescription"], x0 + 54, y - h, w0 - 54, 8.6, "R", GREY)
-        feats = "   ".join(f"<font color='#E21F26'>■</font> {f}" for f in p["features"][:3])
+        feats = "   ".join(f"<font color='#E21F26'>â– </font> {f}" for f in p["features"][:3])
         h += para(c, feats, x0 + 54, y - h - 6, w0 - 54, 7.6, "M", INK) + 6
         y -= max(h, 40) + 30
         c.setStrokeColor(HexColor("#D9DCE1"))
@@ -354,9 +354,9 @@ def back_cover(c):
     logo_corner(c)
     badge_title(c, M, H - 70, "Get in touch", on_red=True)
     rect(c, M, H * 0.38, W - 2 * M, H * 0.42, PAPER, 26)
-    text(c, "LET’S SPECIFY THE RIGHT", M + 28, H * 0.8 - 56, 22, "XB", INK)
+    text(c, "LETâ€™S SPECIFY THE RIGHT", M + 28, H * 0.8 - 56, 22, "XB", INK)
     text(c, "PACKAGING FOR WHAT YOU SHIP.", M + 28, H * 0.8 - 82, 22, "XB", RED)
-    para(c, "Tell us about your products, loads and shipping routes. We will help you identify the right film, honeycomb, cartons and quantities — and supply the printing and safety items your team uses every day.",
+    para(c, "Tell us about your products, loads and shipping routes. We will help you identify the right film, honeycomb, cartons and quantities â€” and supply the printing and safety items your team uses every day.",
          M + 28, H * 0.8 - 98, W - 2 * M - 56, 10.5, "R", GREY)
     rows = [("PHONE", PHONE), ("EMAIL", EMAIL), ("ADDRESS", ADDRESS), ("PARTNERS", PARTNERS)]
     y = H * 0.38 + 136
@@ -380,7 +380,7 @@ def build():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     pdf_path = OUT_DIR / "twisty-wrap-catalogue.pdf"
     c = canvas.Canvas(str(pdf_path), pagesize=A4)
-    c.setTitle("Twisty Wrap Enterprises — Product Catalogue")
+    c.setTitle("Twisty Wrap Enterprises â€” Product Catalogue")
     c.setAuthor("Twisty Wrap Enterprises")
     cover(c)
     contents(c)

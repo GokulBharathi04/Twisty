@@ -24,7 +24,12 @@ from storage import APP_NAME, init_storage, put_object
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-client = AsyncIOMotorClient(os.environ["MONGO_URL"])
+MONGO_URL = os.environ["MONGO_URL"]
+if MONGO_URL.startswith("mongomock://"):  # local dev: in-memory database, emptied on restart
+    from mongomock_motor import AsyncMongoMockClient
+    client = AsyncMongoMockClient()
+else:
+    client = AsyncIOMotorClient(MONGO_URL)
 db = client[os.environ["DB_NAME"]]
 NOTIFY_EMAIL = os.environ["ENQUIRY_NOTIFY_EMAIL"]
 MAX_UPLOAD = 5 * 1024 * 1024
@@ -77,7 +82,7 @@ class EnquiryReceipt(BaseModel):
 async def notify(enquiry_id: str, data: dict):
     try:
         await send_email(to=NOTIFY_EMAIL, subject=f"New enquiry: {data.get('product') or 'General'} — {data['company']}",
-                         html=enquiry_email_html(data))
+                         html=enquiry_email_html(data), reply_to=data["email"])
         status = "sent"
     except Exception as e:
         logger.error(f"Enquiry email failed: {e}")

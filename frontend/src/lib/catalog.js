@@ -1,5 +1,8 @@
-import data from "../data/catalog.json";
+import demo from "../data/catalog.json";
 import { asset } from "./asset";
+
+// Dev-only: ?data=worst|empty|one|1000 swaps in a stress-test dataset (src/dev/breakUi.jsx).
+const data = process.env.NODE_ENV === "production" ? demo : require("../dev/breakUi").pick(demo);
 
 const withAsset = (item) => (item.image ? { ...item, image: asset(item.image) } : item);
 export const categories = data.categories.map(withAsset);
@@ -42,7 +45,7 @@ export const industries = [
 export const CONTACT = {
   phones: ["9500868288", "9445424938"],
   phone: "9500868288 / 9445424938",
-  email: "twistywrapenterprises@outlook.com",
+  email: "admin@twistywrapenterprises.com",
   address: "No:25/1, 1st Main Road, North Jaganathan Nagar, Villivakkam, Chennai 600049",
 };
 
