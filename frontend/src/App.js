@@ -13,6 +13,9 @@ import Applications from "./pages/Applications";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
+// Dev-only dataset switch for stress testing; compiled out of production builds.
+const DataToggle = process.env.NODE_ENV === "production" ? () => null : require("./dev/breakUi").DataToggle;
+
 let lenis;
 
 const SmoothScroll = () => {
@@ -51,6 +54,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <DataToggle />
       </EnquiryProvider>
     </BrowserRouter>
   );
