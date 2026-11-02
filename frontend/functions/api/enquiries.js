@@ -38,7 +38,10 @@ export async function onRequestPost({ request, env, waitUntil }) {
     const ext = (file.name.match(/\.[^.]+$/)?.[0] || "").toLowerCase();
     if (!ALLOWED_EXT.includes(ext)) return fail("Unsupported attachment type", 422);
     if (file.size > MAX_UPLOAD) return fail("Attachment must be 5 MB or smaller", 413);
-    e.attachment_name = file.name.replace(/[^A-Za-z0-9._-]/g, "_").slice(0, 120);
+    // Shorten only the name before the extension, so the validated extension is always the one kept.
+    // (Truncating the whole name could turn "aaa….exe….pdf" into a .exe after the check passed.)
+    const stem = file.name.slice(0, -ext.length).replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 120 - ext.length) || "attachment";
+    e.attachment_name = stem + ext;
     attachment = { name: e.attachment_name, bytes: await file.arrayBuffer(), type: file.type || "application/octet-stream" };
     if (env.ATTACHMENTS) {
       e.attachment_key = `enquiries/${e.reference}/${crypto.randomUUID()}${ext}`;
