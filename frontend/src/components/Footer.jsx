@@ -3,6 +3,8 @@ import { ArrowUpRight } from "lucide-react";
 import { Logo } from "./Logo";
 import { useEnquiry } from "./EnquiryContext";
 import { CONTACT, categories } from "../lib/catalog";
+// Imported (not in public/) so the build gives it a content-hashed file name: a new logo = a new URL, never a stale cached one.
+import pickYourPixelLogo from "../assets/pickyourpixel.webp";
 
 const QUICK = [["Home", "/"], ["About", "/about"], ["Products", "/products"], ["Sustainable Products", "/sustainability"], ["Applications", "/applications"], ["Contact", "/contact"]];
 
@@ -51,9 +53,15 @@ export const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="mt-16 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-xs text-zinc-400 sm:flex-row">
+        <div className="mt-16 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-xs text-zinc-400 lg:flex-row lg:items-center">
           <span>© {new Date().getFullYear()} Twisty Wrap Enterprises. All rights reserved.</span>
           <span className="font-mono uppercase tracking-widest">Protect · Package · Perform · Sustain</span>
+          {/* Agency credit (Pick your Pixel SOP: every site we build carries this in the footer) */}
+          <span className="flex items-center gap-2.5" data-testid="footer-credit">
+            Created by
+            <img src={pickYourPixelLogo} alt="" width="84" height="48" loading="lazy" decoding="async" className="h-12 w-auto" />
+            <span className="font-semibold text-zinc-200">Pick your Pixel</span>
+          </span>
         </div>
       </div>
       <div aria-hidden className="pointer-events-none select-none whitespace-nowrap px-4 pb-4 font-display text-[18vw] font-black uppercase leading-[0.8] text-white/[0.04]">Twisty Wrap</div>
