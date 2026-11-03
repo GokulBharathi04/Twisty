@@ -33,11 +33,11 @@ Run these commands from `frontend/`. Wrangler runs through `npx`, so nothing ext
 4. **Create the attachment bucket.** Enable R2 once in the dashboard (it has a free tier), then run `npx wrangler@4 r2 bucket create twisty-enquiry-attachments`.
 5. **Set up email through Resend** (https://resend.com)
    1. Add the domain `twistywrapenterprises.com` in Resend.
-   2. Add the DNS records Resend shows in **Cloudflare DNS**. These are a DKIM TXT record at `resend._domainkey`, plus an MX and an SPF TXT record on the `send` subdomain. Copy the exact values from Resend.
-      These records sit on subdomains, so **the root SPF record and the GoDaddy mailbox are not affected**.
+   2. Add the DNS records Resend shows in **Cloudflare DNS**, copying the exact values from Resend. This account uses a DKIM TXT record at `resend._domainkey` and two CNAME records, `send` and `rsend`. Set both CNAMEs to **DNS only**.
+      These records sit on subdomains, so **the root MX and SPF records and the GoDaddy mailbox are not affected**. Don't add a second root SPF record or a new DMARC record.
    3. Once the domain shows *Verified*, create an API key with *Sending access* limited to this domain.
    4. Store the key as a secret with `npx wrangler@4 pages secret put RESEND_API_KEY --project-name twisty-wraps`, then paste the key when prompted.
-6. **Deploy:** in PowerShell, run `$env:CI="false"; yarn build; yarn cf:deploy`.
+6. **Deploy:** in PowerShell, run `$env:CI="false"; yarn build; yarn cf:deploy --branch main`. Without `--branch main`, a deploy from any other git branch only creates a preview.
 7. **Add the custom domain.** Go to Dashboard → Workers & Pages → twisty-wraps → Custom domains, then add `twistywrapenterprises.com` and `www.twistywrapenterprises.com`.
 8. **Check it's working**
    - Open `https://twistywrapenterprises.com/api`. It should show `"database": true, "attachments": true, "email": "configured"`.
@@ -53,7 +53,9 @@ The domain is registered at GoDaddy (nameservers `ns63/ns64.domaincontrol.com`),
 | MX | `@` | `smtp.secureserver.net` (priority 0) | GoDaddy mail, **required** |
 | MX | `@` | `mailstore1.secureserver.net` (priority 10) | GoDaddy mail, **required** |
 | TXT | `@` | `v=spf1 include:secureserver.net -all` | keep exactly as is |
-| CNAME | `email`, `autodiscover`, etc. | as listed in GoDaddy DNS | copy any GoDaddy email records |
+| TXT | `_dmarc` | `v=DMARC1; p=quarantine; ...` | keep exactly as is |
+| SRV | `_autodiscover._tcp` | `autodiscover.secureserver.net` | GoDaddy mail client setup |
+| CNAME | `email`, etc. | as listed in GoDaddy DNS | copy any GoDaddy email records and set them to **DNS only** |
 
 The current `A` records for `@` (`15.197.148.33`, `3.33.130.190`) point at GoDaddy's parking/website service. The Pages custom domain (step 7) replaces them, so delete them when Cloudflare asks.
 
@@ -65,7 +67,7 @@ The current `A` records for `@` (`15.197.148.33`, `3.33.130.190`) point at GoDad
 cd frontend
 $env:CI = "false"     # CRA treats lint warnings as errors when CI=true
 yarn build            # also writes sitemap.xml, sitemap-pages.xml, sitemap-products.xml, robots.txt
-yarn cf:deploy        # uploads build/ + functions/ to Cloudflare Pages (production)
+yarn cf:deploy --branch main   # uploads build/ + functions/ to Cloudflare Pages (production)
 ```
 
 **Optional: build from Git instead.** In the Pages project, connect the GitHub repo with these settings:
@@ -99,5 +101,5 @@ npx wrangler@4 d1 execute twisty-enquiries --remote --command "SELECT reference,
 
 ## Before go-live
 
-- `frontend/public/index.html` still loads **Emergent's script** and **PostHog analytics with session recording**, which report to `ap.emergent.sh`. These came from the Emergent build. Decide whether to keep them on the live site, or replace them with Cloudflare Web Analytics (free, no cookies).
+- **Analytics:** the site has none. Emergent's script and PostHog were removed from `frontend/public/index.html`. Cloudflare Web Analytics is a free, cookie-free option if visitor numbers are needed.
 - **Spam:** the form has a honeypot field and only accepts posts from the site's own origin. If spam still gets through, add Cloudflare Turnstile.
