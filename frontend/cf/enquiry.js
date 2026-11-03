@@ -4,6 +4,8 @@
 export const MAX_UPLOAD = 5 * 1024 * 1024;
 export const ALLOWED_EXT = [".pdf", ".jpg", ".jpeg", ".png", ".webp", ".doc", ".docx", ".xls", ".xlsx", ".csv", ".txt"];
 export const EMAIL_RE = /^[^\s@<>()[\],;:"]+@[^\s@<>()[\],;:"]+\.[A-Za-z]{2,}$/;
+// Letters in any script. Digits, +, spaces, dashes and brackets stay allowed. Same rule as src/components/EnquiryForm.jsx.
+export const PHONE_LETTERS = /\p{L}/u;
 export const THANKS = "Thank you for your enquiry. Our team will review your requirements and get back to you shortly.";
 
 const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };

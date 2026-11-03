@@ -1,6 +1,6 @@
 // POST /api/enquiries — Cloudflare Pages Function that replaces the FastAPI endpoint in backend/server.py.
 // Bindings (wrangler.toml): DB = D1 database, ATTACHMENTS = R2 bucket. Secret: RESEND_API_KEY.
-import { ALLOWED_EXT, EMAIL_RE, MAX_UPLOAD, THANKS, enquiryEmailHtml, newReference, sendEmail } from "../../cf/enquiry.js";
+import { ALLOWED_EXT, EMAIL_RE, MAX_UPLOAD, PHONE_LETTERS, THANKS, enquiryEmailHtml, newReference, sendEmail } from "../../cf/enquiry.js";
 
 const json = (body, status = 200) => Response.json(body, { status });
 const fail = (detail, status) => json({ detail }, status);
@@ -30,6 +30,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     attachment_name: null, attachment_key: null,
   };
   if (!e.full_name || !e.company || !e.phone) return fail("Name, company and phone are required", 422);
+  if (PHONE_LETTERS.test(e.phone)) return fail("Phone number can't contain letters. Please use digits only.", 422);
   if (!EMAIL_RE.test(e.email)) return fail("Please enter a valid email address", 422);
 
   let attachment = null;

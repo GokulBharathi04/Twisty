@@ -11,14 +11,18 @@ const API =
   process.env.REACT_APP_ENQUIRIES === "off" ? null
   : process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api`
   : `${process.env.PUBLIC_URL}/api`;
+// Letters in any script are rejected; digits, +, spaces, dashes and brackets stay allowed. Also enforced in cf/enquiry.js.
+const PHONE_LETTERS = /\p{L}/u;
+const PHONE_ERROR = "Phone number can't contain letters. Please use digits only.";
 const EMPTY = { full_name: "", company: "", email: "", phone: "", city: "", quantity: "", specification: "", message: "", website: "" };
 
-const Field = ({ label, name, required, type = "text", value, onChange, span }) => (
+const Field = ({ label, name, required, type = "text", value, onChange, span, error }) => (
   <label className={`block ${span ? "sm:col-span-2" : ""}`}>
     <span className="mb-2 block font-mono text-[11px] uppercase tracking-wider text-brand-grey">
       {label} {required && <span className="text-brand">*</span>}
     </span>
-    <input className="field" name={name} type={type} required={required} value={value} onChange={onChange} data-testid={`enquiry-${name}-input`} />
+    <input className="field" name={name} type={type} required={required} value={value} onChange={onChange} aria-invalid={error ? true : undefined} data-testid={`enquiry-${name}-input`} />
+    {error && <span role="alert" className="mt-2 block text-sm font-semibold text-brand" data-testid={`enquiry-${name}-error`}>{error}</span>}
   </label>
 );
 
@@ -29,8 +33,11 @@ export const EnquiryForm = ({ product = "", onDone }) => {
   const [state, setState] = useState({ status: "idle", error: "", ref: "" });
   const set = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
+  const phoneError = PHONE_LETTERS.test(form.phone) ? PHONE_ERROR : "";
+
   const submit = async (e) => {
     e.preventDefault();
+    if (phoneError) return e.target.elements.phone.focus();
     if (!API) return setState({ status: "error", error: "Enquiries are temporarily unavailable. Please contact us directly." });
     if (file && file.size > 5 * 1024 * 1024) return setState({ status: "error", error: "Attachment must be 5 MB or smaller." });
     setState({ status: "loading", error: "" });
@@ -71,7 +78,7 @@ export const EnquiryForm = ({ product = "", onDone }) => {
       <Field label="Full name" name="full_name" required value={form.full_name} onChange={set} />
       <Field label="Company name" name="company" required value={form.company} onChange={set} />
       <Field label="Email" name="email" type="email" required value={form.email} onChange={set} />
-      <Field label="Phone number" name="phone" type="tel" required value={form.phone} onChange={set} />
+      <Field label="Phone number" name="phone" type="tel" required value={form.phone} onChange={set} error={phoneError} />
       <Field label="City / Location" name="city" value={form.city} onChange={set} />
       <Field label="Product" name="product" value={form.product} onChange={set} />
       <Field label="Quantity required" name="quantity" value={form.quantity} onChange={set} />
